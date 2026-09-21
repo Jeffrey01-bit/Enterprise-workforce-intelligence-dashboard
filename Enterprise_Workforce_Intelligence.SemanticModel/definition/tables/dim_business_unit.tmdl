@@ -1,0 +1,58 @@
+table dim_business_unit
+	lineageTag: d9741066-e8ac-47ed-9f8a-f5395cd33c36
+
+	column BusinessUnitID
+		dataType: string
+		lineageTag: d1ccb1e3-3aba-4be8-8469-bdac82199407
+		summarizeBy: none
+		sourceColumn: BusinessUnitID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column BusinessUnitName
+		dataType: string
+		lineageTag: 2274b6ca-2be5-4e15-a51f-02dab73571b5
+		summarizeBy: none
+		sourceColumn: BusinessUnitName
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column BusinessUnitHead
+		dataType: string
+		lineageTag: 766479b5-a7c3-4bd9-8193-28ab4cfd6ef2
+		summarizeBy: none
+		sourceColumn: BusinessUnitHead
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CostCenter
+		dataType: string
+		lineageTag: 91350ee1-289e-416d-8b15-5830bd4f682a
+		summarizeBy: none
+		sourceColumn: CostCenter
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_business_unit = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Data Science Study materials and projects\Powerbi\Enterprise Workforce Intelligence & Attrition Analytics\Enterprise-Workforce-Intelligence\data\raw\dim_business_unit.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"BusinessUnitID", type text}, {"BusinessUnitName", type text}, {"BusinessUnitHead", type text}, {"CostCenter", type text}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

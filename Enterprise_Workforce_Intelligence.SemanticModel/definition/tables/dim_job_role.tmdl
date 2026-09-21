@@ -1,0 +1,87 @@
+table dim_job_role
+	lineageTag: 7a5417e5-71d2-4c5b-aa0a-01f3ff713217
+
+	column JobRoleID
+		dataType: string
+		lineageTag: 0a166b62-46c2-4507-b3e8-5756f4015ae3
+		summarizeBy: none
+		sourceColumn: JobRoleID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column JobRole
+		dataType: string
+		lineageTag: b318b850-73cd-4d59-b725-f9220e892891
+		summarizeBy: none
+		sourceColumn: JobRole
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column JobFamily
+		dataType: string
+		lineageTag: 1c4a6e1a-fa48-439c-ba21-62717b484dea
+		summarizeBy: none
+		sourceColumn: JobFamily
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column JobCategory
+		dataType: string
+		lineageTag: d80f0ef2-12a9-449b-908b-b9efad714c3c
+		summarizeBy: none
+		sourceColumn: JobCategory
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DepartmentID
+		dataType: string
+		lineageTag: 7da23546-033c-427a-93cf-8d04bec7aaa1
+		summarizeBy: none
+		sourceColumn: DepartmentID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MinLevel
+		dataType: int64
+		formatString: 0
+		lineageTag: d57facf5-f3a4-42f5-9c65-298fb5ab00b5
+		summarizeBy: none
+		sourceColumn: MinLevel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MaxLevel
+		dataType: int64
+		formatString: 0
+		lineageTag: eb41a6de-f287-4fbb-8c38-b6b5bd644c2c
+		summarizeBy: none
+		sourceColumn: MaxLevel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_job_role = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Data Science Study materials and projects\Powerbi\Enterprise Workforce Intelligence & Attrition Analytics\Enterprise-Workforce-Intelligence\data\raw\dim_job_role.csv"),[Delimiter=",", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"JobRoleID", type text}, {"JobRole", type text}, {"JobFamily", type text}, {"JobCategory", type text}, {"DepartmentID", type text}, {"MinLevel", Int64.Type}, {"MaxLevel", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

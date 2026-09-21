@@ -1,0 +1,68 @@
+table dim_department
+	lineageTag: d4e3e79c-de74-4e9a-a6e3-06231286565f
+
+	column DepartmentID
+		dataType: string
+		lineageTag: c26880c2-cc59-4a27-8f05-2a04f89781a1
+		summarizeBy: none
+		sourceColumn: DepartmentID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DepartmentName
+		dataType: string
+		lineageTag: c2833909-b0ff-41ee-bda7-5d07874d583a
+		summarizeBy: none
+		sourceColumn: DepartmentName
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column BusinessUnitID
+		dataType: string
+		lineageTag: 756ec06d-4f88-49b2-9afe-c42b28acec47
+		summarizeBy: none
+		sourceColumn: BusinessUnitID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DepartmentHead
+		dataType: string
+		lineageTag: b45391c0-274b-4ca2-878c-4da4f7af285a
+		summarizeBy: none
+		sourceColumn: DepartmentHead
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CostCenter
+		dataType: string
+		lineageTag: d8ce9fdc-7cc7-4655-b5d4-492f7c4bc30c
+		summarizeBy: none
+		sourceColumn: CostCenter
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_department = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Data Science Study materials and projects\Powerbi\Enterprise Workforce Intelligence & Attrition Analytics\Enterprise-Workforce-Intelligence\data\raw\dim_department.csv"),[Delimiter=",", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"DepartmentID", type text}, {"DepartmentName", type text}, {"BusinessUnitID", type text}, {"DepartmentHead", type text}, {"CostCenter", type text}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

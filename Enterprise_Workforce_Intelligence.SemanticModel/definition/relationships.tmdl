@@ -1,0 +1,74 @@
+relationship b25c9398-7547-412b-a996-4831b3a9f56f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_employee.DateOfBirth
+	toColumn: LocalDateTable_70cd5d16-6d00-44c0-bc63-8eb37a6f44b5.Date
+
+relationship bf555c41-dadb-49fa-81d8-00c3f12c9ca0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_employee.HireDate
+	toColumn: LocalDateTable_99d83da7-9d12-45ac-9277-0e364d6f725f.Date
+
+relationship AutoDetected_ffcbfb3a-a109-4916-8e7a-04277e96cd41
+	fromColumn: dim_employee.JobRoleID
+	toColumn: dim_job_role.JobRoleID
+
+relationship AutoDetected_599ce6d1-087c-487f-9216-efb3c5c514bc
+	fromColumn: fact_employee_lifecycle.EmployeeID
+	toColumn: dim_employee.EmployeeID
+
+relationship AutoDetected_ff294c7d-a012-4aa2-841f-bf9f8876c792
+	fromColumn: fact_compensation.EmployeeID
+	toColumn: dim_employee.EmployeeID
+
+relationship AutoDetected_1574d477-31a6-4d2b-a8b5-f2d5d1b3050b
+	fromColumn: fact_performance.EmployeeID
+	toColumn: dim_employee.EmployeeID
+
+relationship AutoDetected_c29a9f3a-4909-4ffd-b550-343eb68b301e
+	fromColumn: fact_engagement.EmployeeID
+	toColumn: dim_employee.EmployeeID
+
+relationship AutoDetected_1aae8f95-aebf-438e-b3c0-1265a3299f1f
+	fromColumn: fact_training.EmployeeID
+	toColumn: dim_employee.EmployeeID
+
+relationship AutoDetected_6b77a3d0-c597-4592-89ea-c2011e83fd39
+	fromColumn: fact_attendance.EmployeeID
+	toColumn: dim_employee.EmployeeID
+
+relationship AutoDetected_ce4e10d9-17a7-4330-b375-ef3c39bbd356
+	fromColumn: dim_department.BusinessUnitID
+	toColumn: dim_business_unit.BusinessUnitID
+
+relationship AutoDetected_ceb63f5b-9567-4388-90da-ea01cd161569
+	fromColumn: dim_employee.LocationID
+	toColumn: dim_location.LocationID
+
+relationship 2095cc31-c1d1-3b3a-73d8-bf4fa1a5a6de
+	fromColumn: dim_employee.DepartmentID
+	toColumn: dim_department.DepartmentID
+
+relationship f2d2d7e9-71c0-2de8-870d-826e11468194
+	fromColumn: fact_employee_lifecycle.EventDate
+	toColumn: dim_date.Date
+
+relationship 76c2c4d1-5ae6-dd56-ce07-f8f0749403aa
+	fromColumn: fact_compensation.EffectiveDate
+	toColumn: dim_date.Date
+
+relationship 166cc47f-56ed-6070-a31f-a4b3e4f5d0c8
+	fromColumn: fact_performance.ReviewDate
+	toColumn: dim_date.Date
+
+relationship 57b08173-7dd5-c8ca-034c-610c06e0ee19
+	fromColumn: fact_attendance.Month
+	toColumn: dim_date.Date
+
+relationship 6b7ff52e-4c88-482b-7828-e07272f7d043
+	fromColumn: fact_engagement.SurveyDate
+	toColumn: dim_date.Date
+
+relationship ba234fc7-33e4-d83a-9f82-ea7689180c94
+	fromColumn: fact_training.TrainingDate
+	toColumn: dim_date.Date
+

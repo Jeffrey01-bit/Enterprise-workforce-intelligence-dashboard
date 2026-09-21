@@ -1,0 +1,124 @@
+table fact_performance
+	lineageTag: 4867e89c-32fa-48fb-8129-4500283bd9c4
+
+	column PerformanceID
+		dataType: string
+		lineageTag: 97a203d2-7ab0-48a5-8aad-ba0cb3e52f7b
+		summarizeBy: none
+		sourceColumn: PerformanceID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeID
+		dataType: string
+		lineageTag: 195d9c24-c8c9-424b-99cb-7e8302a69b77
+		summarizeBy: none
+		sourceColumn: EmployeeID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReviewDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c169127b-3e46-49d9-a747-1e03d3839bab
+		summarizeBy: none
+		sourceColumn: ReviewDate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ReviewCycle
+		dataType: string
+		lineageTag: 5a0c6710-ab83-4209-b3a0-df813a02307e
+		summarizeBy: none
+		sourceColumn: ReviewCycle
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PerformanceScore
+		dataType: double
+		lineageTag: 1483f670-318f-49b4-b053-8273adc175f2
+		summarizeBy: sum
+		sourceColumn: PerformanceScore
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PerformanceRating
+		dataType: int64
+		formatString: 0
+		lineageTag: 75b6cc01-02be-4861-86ad-fb72864c130f
+		summarizeBy: sum
+		sourceColumn: PerformanceRating
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PerformanceCategory
+		dataType: string
+		lineageTag: 14955e7b-8d93-432e-9856-a8ae375f74f5
+		summarizeBy: none
+		sourceColumn: PerformanceCategory
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column GoalAchievementPct
+		dataType: double
+		lineageTag: 69edd3f8-0662-4c34-9d37-3eeb39f0d195
+		summarizeBy: sum
+		sourceColumn: GoalAchievementPct
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PotentialRating
+		dataType: int64
+		formatString: 0
+		lineageTag: dded104c-9e79-4eda-8192-303f063036c1
+		summarizeBy: sum
+		sourceColumn: PotentialRating
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PromotionReadiness
+		dataType: string
+		lineageTag: 75d901b7-9dd6-4dcc-8ea5-ef6a838e63c5
+		summarizeBy: none
+		sourceColumn: PromotionReadiness
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_performance = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Data Science Study materials and projects\Powerbi\Enterprise Workforce Intelligence & Attrition Analytics\Enterprise-Workforce-Intelligence\data\raw\fact_performance.csv"),[Delimiter=",", Columns=10, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"PerformanceID", type text}, {"EmployeeID", type text}, {"ReviewDate", type date}, {"ReviewCycle", type text}, {"PerformanceScore", type number}, {"PerformanceRating", Int64.Type}, {"PerformanceCategory", type text}, {"GoalAchievementPct", type number}, {"PotentialRating", Int64.Type}, {"PromotionReadiness", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

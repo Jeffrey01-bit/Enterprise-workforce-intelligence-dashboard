@@ -1,0 +1,34 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IN
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["dim_business_unit","dim_department","dim_job_role","dim_location","dim_date","dim_manager","dim_employee","fact_employee_lifecycle","fact_compensation","fact_performance","fact_engagement","fact_training","fact_attendance","_Measures"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table dim_business_unit
+ref table dim_department
+ref table dim_job_role
+ref table dim_location
+ref table dim_date
+ref table DateTableTemplate_648f1c67-43d2-4b15-a2dd-39a93254ac26
+ref table dim_manager
+ref table dim_employee
+ref table LocalDateTable_70cd5d16-6d00-44c0-bc63-8eb37a6f44b5
+ref table LocalDateTable_99d83da7-9d12-45ac-9277-0e364d6f725f
+ref table fact_employee_lifecycle
+ref table fact_compensation
+ref table fact_performance
+ref table fact_engagement
+ref table fact_training
+ref table fact_attendance
+ref table _Measures
+
+ref cultureInfo en-US
+

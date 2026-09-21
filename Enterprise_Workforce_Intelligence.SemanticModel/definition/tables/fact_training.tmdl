@@ -1,0 +1,133 @@
+table fact_training
+	lineageTag: 1e6a5528-1e33-43f8-9854-996bf230cf09
+
+	column TrainingID
+		dataType: string
+		lineageTag: a76dc082-c26f-495c-bf69-867020a3ac49
+		summarizeBy: none
+		sourceColumn: TrainingID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeID
+		dataType: string
+		lineageTag: e964fee8-0b2f-4757-be73-3f6ac9d67092
+		summarizeBy: none
+		sourceColumn: EmployeeID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TrainingDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2510848e-3f1c-4f96-9ed5-712e0a5bf632
+		summarizeBy: none
+		sourceColumn: TrainingDate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column TrainingProgram
+		dataType: string
+		lineageTag: 53fc1bbe-6423-4782-b7cc-f5098ba10e93
+		summarizeBy: none
+		sourceColumn: TrainingProgram
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TrainingCategory
+		dataType: string
+		lineageTag: c0947a8b-3ae6-473f-a82e-39891db15121
+		summarizeBy: none
+		sourceColumn: TrainingCategory
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SkillArea
+		dataType: string
+		lineageTag: 48adc3be-22df-472b-a3c9-da271ba89978
+		summarizeBy: none
+		sourceColumn: SkillArea
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DeliveryMethod
+		dataType: string
+		lineageTag: e6101468-369c-46e5-aa76-679c9cadb63c
+		summarizeBy: none
+		sourceColumn: DeliveryMethod
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TrainingHours
+		dataType: int64
+		formatString: 0
+		lineageTag: cd590023-c560-4e50-aecc-753f0b4c81d3
+		summarizeBy: sum
+		sourceColumn: TrainingHours
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TrainingCost
+		dataType: double
+		lineageTag: 3de00018-329e-452e-ab77-0049d47f48a7
+		summarizeBy: sum
+		sourceColumn: TrainingCost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CompletionStatus
+		dataType: string
+		lineageTag: 752cc8f3-cd47-4227-bce7-6d82b9490524
+		summarizeBy: none
+		sourceColumn: CompletionStatus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column AssessmentScore
+		dataType: double
+		lineageTag: ab21d06b-6880-4a7a-b2e3-239ca0dd1b90
+		summarizeBy: sum
+		sourceColumn: AssessmentScore
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_training = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Data Science Study materials and projects\Powerbi\Enterprise Workforce Intelligence & Attrition Analytics\Enterprise-Workforce-Intelligence\data\raw\fact_training.csv"),[Delimiter=",", Columns=11, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"TrainingID", type text}, {"EmployeeID", type text}, {"TrainingDate", type date}, {"TrainingProgram", type text}, {"TrainingCategory", type text}, {"SkillArea", type text}, {"DeliveryMethod", type text}, {"TrainingHours", Int64.Type}, {"TrainingCost", type number}, {"CompletionStatus", type text}, {"AssessmentScore", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

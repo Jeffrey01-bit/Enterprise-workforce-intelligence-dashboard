@@ -1,0 +1,108 @@
+table dim_manager
+	lineageTag: 17bc93eb-8da6-4b0f-91fb-d0ba2560265f
+
+	column ManagerID
+		dataType: string
+		lineageTag: a25b3140-9ef8-41f9-a0c1-f3044cd12e30
+		summarizeBy: none
+		sourceColumn: ManagerID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ManagerName
+		dataType: string
+		lineageTag: 1a87ad89-78bc-4a40-806a-d0ae4bf863a6
+		summarizeBy: none
+		sourceColumn: ManagerName
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column BusinessUnitID
+		dataType: string
+		lineageTag: 3e997137-c6bb-41e6-a3b1-bc923d063747
+		summarizeBy: none
+		sourceColumn: BusinessUnitID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DepartmentID
+		dataType: string
+		lineageTag: 3b1e637b-3ca2-4c60-bbba-1b12a34613ed
+		summarizeBy: none
+		sourceColumn: DepartmentID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column JobRoleID
+		dataType: string
+		lineageTag: 9339b357-8526-42b4-afc4-590e1d2f55ce
+		summarizeBy: none
+		sourceColumn: JobRoleID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ManagerLevel
+		dataType: string
+		lineageTag: f5ceeb4c-be4e-47e1-a28f-6ee42783a019
+		summarizeBy: none
+		sourceColumn: ManagerLevel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocationID
+		dataType: string
+		lineageTag: 8c8ee1e3-ecb9-4f9e-a2a6-b2859546501e
+		summarizeBy: none
+		sourceColumn: LocationID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReportsToManagerID
+		dataType: string
+		lineageTag: 318708ff-6f5b-4365-b50a-39da1ab3955f
+		summarizeBy: none
+		sourceColumn: ReportsToManagerID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ManagerStatus
+		dataType: string
+		lineageTag: c8b2ed61-d4e5-4a31-b1ae-4f0e690b0249
+		summarizeBy: none
+		sourceColumn: ManagerStatus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_manager = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Data Science Study materials and projects\Powerbi\Enterprise Workforce Intelligence & Attrition Analytics\Enterprise-Workforce-Intelligence\data\raw\dim_manager.csv"),[Delimiter=",", Columns=9, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}, {"Column8", type text}, {"Column9", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"ManagerID", type text}, {"ManagerName", type text}, {"BusinessUnitID", type text}, {"DepartmentID", type text}, {"JobRoleID", type text}, {"ManagerLevel", type text}, {"LocationID", type text}, {"ReportsToManagerID", type text}, {"ManagerStatus", type text}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

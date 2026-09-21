@@ -1,0 +1,122 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY26SU05",
+      "reportVersionAtImport": {
+        "visual": "2.9.0",
+        "report": "3.3.0",
+        "page": "2.3.1"
+      },
+      "type": "SharedResources"
+    }
+  },
+  "objects": {
+    "section": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "publicCustomVisuals": [
+    "advanceCardE03760C5AB684758B56AA29F9E6C257B"
+  ],
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY26SU05",
+          "path": "BaseThemes/CY26SU05.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "download_(1)15526170346297885.svg",
+          "path": "download_(1)15526170346297885.svg",
+          "type": "Image"
+        },
+        {
+          "name": "download_(4)5381830153871923.svg",
+          "path": "download_(4)5381830153871923.svg",
+          "type": "Image"
+        },
+        {
+          "name": "download_(5)9932932752332222.svg",
+          "path": "download_(5)9932932752332222.svg",
+          "type": "Image"
+        },
+        {
+          "name": "download_(6)8685680323730792.svg",
+          "path": "download_(6)8685680323730792.svg",
+          "type": "Image"
+        },
+        {
+          "name": "download_(6)8884458607509088.svg",
+          "path": "download_(6)8884458607509088.svg",
+          "type": "Image"
+        },
+        {
+          "name": "download_(7)2191017624410183.svg",
+          "path": "download_(7)2191017624410183.svg",
+          "type": "Image"
+        },
+        {
+          "name": "download_(7)3752183349645529.svg",
+          "path": "download_(7)3752183349645529.svg",
+          "type": "Image"
+        },
+        {
+          "name": "download_(8)2489396200075379.svg",
+          "path": "download_(8)2489396200075379.svg",
+          "type": "Image"
+        },
+        {
+          "name": "download_(8)9699059915508818.svg",
+          "path": "download_(8)9699059915508818.svg",
+          "type": "Image"
+        },
+        {
+          "name": "download1951512362956105.svg",
+          "path": "download1951512362956105.svg",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "AllowSummarized",
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": true,
+    "useDefaultAggregateDisplayName": true
+  }
+}

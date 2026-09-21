@@ -1,0 +1,88 @@
+table dim_location
+	lineageTag: 9154f316-d3ff-43fc-8fcc-b4ffdfe11571
+
+	column LocationID
+		dataType: string
+		lineageTag: bf7002f6-07fc-491c-a96c-8286bfd4f932
+		summarizeBy: none
+		sourceColumn: LocationID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column OfficeName
+		dataType: string
+		lineageTag: 1d045750-f005-4111-9e8f-5abb6675a5d7
+		summarizeBy: none
+		sourceColumn: OfficeName
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 98191b0c-6b41-4157-8ce0-85a2bfc7d5b9
+		summarizeBy: none
+		sourceColumn: City
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 8b4f2896-c979-4059-b98b-b688ada4e128
+		summarizeBy: none
+		sourceColumn: Country
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CountryCode
+		dataType: string
+		lineageTag: ec592c62-7d7d-4ec4-877a-25564e63d988
+		summarizeBy: none
+		sourceColumn: CountryCode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: e28efa25-c3cd-43d1-96fc-81d936726d30
+		summarizeBy: none
+		sourceColumn: Region
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TimeZone
+		dataType: string
+		lineageTag: 7dda908b-8bc7-4f57-ae47-08dc7fa6541b
+		summarizeBy: none
+		sourceColumn: TimeZone
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_location = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Data Science Study materials and projects\Powerbi\Enterprise Workforce Intelligence & Attrition Analytics\Enterprise-Workforce-Intelligence\data\raw\dim_location.csv"),[Delimiter=",", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"LocationID", type text}, {"OfficeName", type text}, {"City", type text}, {"Country", type text}, {"CountryCode", type text}, {"Region", type text}, {"TimeZone", type text}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

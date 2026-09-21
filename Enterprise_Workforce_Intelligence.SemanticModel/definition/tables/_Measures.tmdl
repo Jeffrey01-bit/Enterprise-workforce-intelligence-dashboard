@@ -1,0 +1,509 @@
+table _Measures
+	lineageTag: bde8a978-b300-44d7-b4ac-2d85c91033fe
+
+	measure 'Total Employees' =
+			
+			DISTINCTCOUNT(dim_employee[EmployeeID])
+		formatString: 0
+		displayFolder: Workforce Overview
+		lineageTag: b683b593-2460-4abf-9e53-274f61a1e451
+
+	measure 'Active Employees' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(dim_employee[EmployeeID]),
+			    dim_employee[EmployeeStatus] = "Active"
+			)
+		formatString: 0
+		displayFolder: Workforce Overview
+		lineageTag: 1542c96a-b95a-4b72-9a99-be4be0925472
+
+	measure 'Inactive Employees' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(dim_employee[EmployeeID]),
+			    dim_employee[EmployeeStatus] <> "Active"
+			)
+		formatString: 0
+		displayFolder: Workforce Overview
+		lineageTag: 1ea21bc9-ff20-496e-b7fa-20e572a8680c
+
+	measure 'Employee Exits' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(fact_employee_lifecycle[EmployeeID]),
+			    fact_employee_lifecycle[EventType] = "Exit"
+			)
+		formatString: 0
+		displayFolder: Attrition & Lifecycle
+		lineageTag: 74c4b7e4-1503-49c0-8940-6c69a3e2c40d
+
+	measure 'Attrition Rate' =
+			
+			DIVIDE(
+			    [Employee Exits],
+			    [Total Employees],
+			    0
+			)
+		displayFolder: Attrition & Lifecycle
+		lineageTag: a6437a8e-44e5-4077-8d13-5f5e7903dbd4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'New Hires' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(fact_employee_lifecycle[EmployeeID]),
+			    fact_employee_lifecycle[EventType] = "Hire"
+			)
+		formatString: 0
+		displayFolder: Workforce Overview
+		lineageTag: 786a6f0f-3fee-45b6-808e-321339bd1604
+
+	measure Promotions =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(fact_employee_lifecycle[EmployeeID]),
+			    fact_employee_lifecycle[EventType] = "Promotion"
+			)
+		formatString: 0
+		displayFolder: Attrition & Lifecycle
+		lineageTag: 4268b093-03bc-4437-9d63-b902211564f4
+
+	measure Transfers =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(fact_employee_lifecycle[EmployeeID]),
+			    fact_employee_lifecycle[EventType] = "Transfer"
+			)
+		formatString: 0
+		displayFolder: Attrition & Lifecycle
+		lineageTag: 17e474e6-751e-47b6-ae92-595dfa9075a7
+
+	measure 'Leave Events' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(fact_employee_lifecycle[EmployeeID]),
+			    fact_employee_lifecycle[EventType] = "Leave"
+			)
+		formatString: 0
+		displayFolder: Attrition & Lifecycle
+		lineageTag: 9e82e828-0c06-46bc-9f20-3b9458e0d159
+
+	measure 'Return Events' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(fact_employee_lifecycle[EmployeeID]),
+			    fact_employee_lifecycle[EventType] = "Return"
+			)
+		formatString: 0
+		displayFolder: Attrition & Lifecycle
+		lineageTag: 051a47f8-f667-40a9-aa4d-a07ad0cfaabf
+
+	measure 'Average Base Salary' =
+			
+			AVERAGE(fact_compensation[BaseSalary])
+		displayFolder: Compensation
+		lineageTag: 19b12920-cf31-411d-a8af-683327c8a77d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Compensation' =
+			
+			SUM(fact_compensation[TotalCompensation])
+		displayFolder: Compensation
+		lineageTag: fb640349-d3ac-4bd6-98a7-b3c9cff83642
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Performance Score' =
+			
+			AVERAGE(fact_performance[PerformanceScore])
+		displayFolder: Performance & Engagement
+		lineageTag: 6cec2989-6f64-4a58-8e7e-eb6d9bc88c99
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Engagement Score' =
+			
+			AVERAGE(fact_engagement[OverallEngagementScore])
+		displayFolder: Performance & Engagement
+		lineageTag: 3e6c130d-795e-433a-839e-ae3c316caf3e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Attendance Rate' =
+			
+			AVERAGE(fact_attendance[AttendanceRatePct])
+		displayFolder: Attendance
+		lineageTag: b3386a66-8a92-49f7-b5ec-24247e984375
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Training Hours' =
+			
+			SUM(fact_training[TrainingHours])
+		formatString: 0
+		displayFolder: Training & Development
+		lineageTag: 9c9c9c33-8609-462f-af2c-8632f1268de4
+
+	measure 'Total Training Cost' =
+			
+			SUM(fact_training[TrainingCost])
+		displayFolder: Training & Development
+		lineageTag: 4db9dc20-889a-41a8-894b-a3aa108b0fef
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Training Hours' =
+			
+			AVERAGE(fact_training[TrainingHours])
+		displayFolder: Training & Development
+		lineageTag: e56880bb-10c3-479d-b1af-2a745a8cc2ae
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Completed Training' =
+			
+			CALCULATE(
+			    COUNTROWS(fact_training),
+			    fact_training[CompletionStatus] = "Completed"
+			)
+		formatString: 0
+		displayFolder: Training & Development
+		lineageTag: cebdb000-632b-4135-b7a9-6b45e0f8c104
+
+	measure 'Training Completion Rate' =
+			
+			DIVIDE(
+			    [Completed Training],
+			    COUNTROWS(fact_training),
+			    0
+			)
+		displayFolder: Training & Development
+		lineageTag: c291eeb4-2e5c-464a-b9f7-70c36cf3fc3c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Absent Days' =
+			
+			SUM(fact_attendance[TotalAbsentDays])
+		formatString: 0
+		displayFolder: Attendance
+		lineageTag: 58940e6e-0077-405a-8df7-d2b71af7a42b
+
+	measure 'Average Absent Days' =
+			
+			AVERAGE(fact_attendance[TotalAbsentDays])
+		displayFolder: Attendance
+		lineageTag: f4f15ea2-8190-42c1-93bb-4a40cd618a91
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Absence Rate' =
+			
+			AVERAGE(fact_attendance[AbsenceRatePct])
+		displayFolder: Attendance
+		lineageTag: d4cd3e61-5cb4-4571-9905-ac1284a2c3a1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Goal Achievement' =
+			
+			AVERAGE(fact_performance[GoalAchievementPct])
+		displayFolder: Performance & Engagement
+		lineageTag: d0864159-0394-4be7-ae1b-9fd9e7701372
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Performance Rating' =
+			
+			AVERAGE(fact_performance[PerformanceRating])
+		displayFolder: Performance & Engagement
+		lineageTag: a016a35d-a233-434b-888b-d894686c357e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Manager Satisfaction' =
+			
+			AVERAGE(fact_engagement[ManagerSatisfaction])
+		displayFolder: Performance & Engagement
+		lineageTag: 197e5dbf-637f-4ec1-8cd3-6c2311e722d9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Career Growth' =
+			
+			AVERAGE(fact_engagement[CareerGrowth])
+		displayFolder: Performance & Engagement
+		lineageTag: 772328b4-6cc2-4492-b2db-15340c42e706
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Compensation Satisfaction' =
+			
+			AVERAGE(fact_engagement[CompensationSatisfaction])
+		displayFolder: Compensation
+		lineageTag: 6be293e6-0bb1-4285-ad83-aeb55b60a63f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Intent To Stay' =
+			
+			AVERAGE(fact_engagement[IntentToStayScore])
+		displayFolder: Performance & Engagement
+		lineageTag: 49fe859a-ecd4-4676-aa95-9f3395537b8c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Managers' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(dim_employee[EmployeeID]),
+			    dim_employee[IsManager] = TRUE()
+			)
+		formatString: 0
+		displayFolder: Workforce Overview
+		lineageTag: eefad82a-40f1-45c0-8a6f-10c1df67d5a4
+
+	measure 'Individual Contributors' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(dim_employee[EmployeeID]),
+			    dim_employee[IsManager] = FALSE()
+			)
+		formatString: 0
+		displayFolder: Workforce Overview
+		lineageTag: 5ae603ac-3282-41e7-a8ce-406bdf3cab5a
+
+	measure 'Promotion Rate' =
+			
+			DIVIDE(
+			    [Promotions],
+			    [Total Employees],
+			    0
+			)
+		displayFolder: Attrition & Lifecycle
+		lineageTag: 487084f6-8527-4eaf-976c-534706a717a2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Transfer Rate' =
+			
+			DIVIDE(
+			    [Transfers],
+			    [Total Employees],
+			    0
+			)
+		displayFolder: Attrition & Lifecycle
+		lineageTag: 3a84bf30-2c15-413c-b424-e557fa9ff7be
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Attrition Rate Change' =
+			
+			[Attrition Rate] - [Previous Year Attrition Rate]
+		lineageTag: c0aa8cc3-0c69-48b2-a9d3-e3fb043a9022
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Employee of Total' =
+			
+			DIVIDE(
+			    [Total Employees],
+			    CALCULATE(
+			        [Total Employees],
+			        REMOVEFILTERS(dim_employee)
+			    )
+			)
+		displayFolder: Percentage Measures
+		lineageTag: 68959ba3-5bb6-4423-91ad-023f9ef818ca
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Active of Total' =
+			
+			DIVIDE(
+			    [Active Employees],
+			    [Total Employees],
+			    0
+			)
+		displayFolder: Percentage Measures
+		lineageTag: f5e28284-f6f7-4283-8dc0-5628dc8f3fa4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Inactive of Total' =
+			
+			DIVIDE(
+			    [Inactive Employees],
+			    [Total Employees],
+			    0
+			)
+		displayFolder: Percentage Measures
+		lineageTag: 9d0666b7-03eb-4da6-b30a-38ae777bb99f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Headcount Trend' =
+			
+			VAR SelectedDate =
+			    MAX ( dim_date[Date] )
+			RETURN
+			COUNTROWS (
+			    FILTER (
+			        ALL ( dim_employee ),
+			        dim_employee[HireDate] <= SelectedDate
+			    )
+			)
+		formatString: 0
+		lineageTag: 2386ce26-d9cd-4e1a-bff0-56e7a62f2fb1
+
+	measure 'YTD Employee Exits' =
+			
+			CALCULATE(
+			    [Employee Exits],
+			    DATESYTD(dim_date[Date])
+			)
+		formatString: 0
+		displayFolder: Attrition & Lifecycle
+		lineageTag: 13e4c5f9-6cfd-49a9-9339-a5b555997c73
+
+	measure 'YTD Attrition Rate' =
+			
+			DIVIDE(
+			    [YTD Employee Exits],
+			    [Total Employees],
+			    0
+			)
+		displayFolder: Attrition & Lifecycle
+		lineageTag: 370480c9-1c22-4700-b60a-bb8ceffbaa6c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Headcount Growth %' =
+			
+			VAR CurrentHeadcount =
+			    [Headcount Trend]
+			
+			VAR PreviousYearHeadcount =
+			    CALCULATE(
+			        [Headcount Trend],
+			        DATEADD(dim_date[Date], -1, YEAR)
+			    )
+			
+			RETURN
+			    DIVIDE(
+			        CurrentHeadcount - PreviousYearHeadcount,
+			        PreviousYearHeadcount
+			    )
+		lineageTag: 52b1df3b-debb-4a0f-9c25-f169c59c934b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Insight 1' = FORMAT([Headcount Growth %], "0.0%")
+		lineageTag: 33c33990-ad4f-491a-8057-021c574c373a
+
+	measure 'Active Workforce %' =
+			
+			DIVIDE(
+			    [Active Employees],
+			    [Total Employees]
+			)
+		lineageTag: 1479cfa6-0f19-47b9-9a62-680cb47a552c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Insight 2' = FORMAT([Active Workforce %], "0.0%")
+		lineageTag: 299b17e8-2cce-4d04-8681-9db784774063
+
+	measure 'Previous Year Attrition Rate' =
+			
+			CALCULATE(
+			    [Attrition Rate],
+			    DATEADD(dim_date[Date], -1, YEAR)
+			)
+		lineageTag: eaaec5c8-f4c3-4058-b114-6fbb86c68f2a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Insight 3' =
+			
+			"Attrition rate is "
+			    & FORMAT([Attrition Rate], "0.00%")
+			    & ", "
+			    & IF(
+			        [Attrition Rate Change] < 0,
+			        "down by ",
+			        "up by "
+			    )
+			    & FORMAT(ABS([Attrition Rate Change]), "0.00%")
+			    & " vs last year."
+		lineageTag: 6cfc04f2-3f2a-4349-bb2c-fa126a7f5695
+
+	measure 'Data & AI + Cloud Workforce %' =
+			
+			VAR SelectedWorkforce =
+			    CALCULATE(
+			        [Total Employees],
+			        REMOVEFILTERS(dim_business_unit),
+			        dim_business_unit[BusinessUnitName] IN {
+			            "Data & AI",
+			            "Cloud & Infrastructure"
+			        }
+			    )
+			VAR TotalWorkforce =
+			    CALCULATE(
+			        [Total Employees],
+			        REMOVEFILTERS(dim_business_unit)
+			    )
+			RETURN
+			    DIVIDE(
+			        SelectedWorkforce,
+			        TotalWorkforce
+			    )
+		lineageTag: fc1bdb7f-ae12-428c-8353-fb088e6e342e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Top Location' =
+			
+			VAR LocationTable =
+			    ADDCOLUMNS(
+			        ALL(dim_location[City]),
+			        "EmployeeCount", [Total Employees]
+			    )
+			RETURN
+			    MAXX(
+			        TOPN(
+			            1,
+			            LocationTable,
+			            [EmployeeCount],
+			            DESC
+			        ),
+			        dim_location[City]
+			    )
+		lineageTag: 34e2a978-0e64-4cce-b5bc-bdaf26e62151
+
+	column Measures
+		dataType: string
+		isHidden
+		lineageTag: 9a8155a0-9298-4d44-9d27-0997c197558f
+		summarizeBy: none
+		sourceColumn: Measures
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45W8k1NLC4tSi1Wio0FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Measures = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Measures", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

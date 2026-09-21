@@ -1,0 +1,159 @@
+table fact_attendance
+	lineageTag: eb887ca8-3b33-4366-b72c-dac6c245fa44
+
+	column AttendanceID
+		dataType: string
+		lineageTag: 721130db-c5b4-4302-bfe2-f5a644920689
+		summarizeBy: none
+		sourceColumn: AttendanceID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeID
+		dataType: string
+		lineageTag: b8ac1690-dbde-4c52-a1a3-b21f5bb98661
+		summarizeBy: none
+		sourceColumn: EmployeeID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ae28570b-7948-4509-ab45-703890f3fcc7
+		summarizeBy: none
+		sourceColumn: Month
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column WorkingDays
+		dataType: int64
+		formatString: 0
+		lineageTag: a7c2d15c-bb21-44a6-ad14-63f57ffa15ff
+		summarizeBy: sum
+		sourceColumn: WorkingDays
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PresentDays
+		dataType: int64
+		formatString: 0
+		lineageTag: 1fd2f1b1-6257-438f-9d8b-6815d9663c4e
+		summarizeBy: sum
+		sourceColumn: PresentDays
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PlannedLeaveDays
+		dataType: int64
+		formatString: 0
+		lineageTag: 09cd8e6b-cb8b-4c8e-864c-691fd237eccc
+		summarizeBy: sum
+		sourceColumn: PlannedLeaveDays
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnplannedAbsenceDays
+		dataType: int64
+		formatString: 0
+		lineageTag: a48eb119-1c56-409e-814d-016307bb5632
+		summarizeBy: sum
+		sourceColumn: UnplannedAbsenceDays
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalAbsentDays
+		dataType: int64
+		formatString: 0
+		lineageTag: c002e6e3-8f89-43c8-ad13-d634829f42ed
+		summarizeBy: sum
+		sourceColumn: TotalAbsentDays
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column RemoteWorkDays
+		dataType: int64
+		formatString: 0
+		lineageTag: 62659805-ea94-457a-88a3-59aa0dfdb591
+		summarizeBy: sum
+		sourceColumn: RemoteWorkDays
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column OnsiteWorkDays
+		dataType: int64
+		formatString: 0
+		lineageTag: 3577d3ae-cd1f-445e-8fe0-a06343ee1c2e
+		summarizeBy: sum
+		sourceColumn: OnsiteWorkDays
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column AttendanceRatePct
+		dataType: double
+		lineageTag: 92b54984-6d8f-4bd9-a2fa-ee5dd27a7cf2
+		summarizeBy: sum
+		sourceColumn: AttendanceRatePct
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AbsenceRatePct
+		dataType: double
+		lineageTag: 32fbe4cb-8efc-4479-92cf-7bfdeb8e647f
+		summarizeBy: sum
+		sourceColumn: AbsenceRatePct
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AttendanceStatus
+		dataType: string
+		lineageTag: b9ec76d2-ed5d-4a38-9643-2fc8eef7c875
+		summarizeBy: none
+		sourceColumn: AttendanceStatus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_attendance = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Data Science Study materials and projects\Powerbi\Enterprise Workforce Intelligence & Attrition Analytics\Enterprise-Workforce-Intelligence\data\raw\fact_attendance.csv"),[Delimiter=",", Columns=13, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"AttendanceID", type text}, {"EmployeeID", type text}, {"Month", type date}, {"WorkingDays", Int64.Type}, {"PresentDays", Int64.Type}, {"PlannedLeaveDays", Int64.Type}, {"UnplannedAbsenceDays", Int64.Type}, {"TotalAbsentDays", Int64.Type}, {"RemoteWorkDays", Int64.Type}, {"OnsiteWorkDays", Int64.Type}, {"AttendanceRatePct", type number}, {"AbsenceRatePct", type number}, {"AttendanceStatus", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

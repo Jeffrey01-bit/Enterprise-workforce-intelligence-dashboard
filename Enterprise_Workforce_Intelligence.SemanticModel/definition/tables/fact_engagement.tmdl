@@ -1,0 +1,174 @@
+table fact_engagement
+	lineageTag: f2762d0e-6220-41ae-ad56-f13df7301867
+
+	column EngagementID
+		dataType: string
+		lineageTag: c6cc86d1-2c16-4985-8f72-1f155d6a84e2
+		summarizeBy: none
+		sourceColumn: EngagementID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeID
+		dataType: string
+		lineageTag: 24d4b222-a05e-4c69-9f58-2217ed78c23b
+		summarizeBy: none
+		sourceColumn: EmployeeID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SurveyDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: afccae5b-af33-4e14-a031-ad009b68109a
+		summarizeBy: none
+		sourceColumn: SurveyDate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column SurveyPeriod
+		dataType: string
+		lineageTag: ff5c8b1e-01c0-4027-830f-0438748a9337
+		summarizeBy: none
+		sourceColumn: SurveyPeriod
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column OverallEngagementScore
+		dataType: double
+		lineageTag: b6abc824-0e18-4ad1-8b79-2e7ed1e6bdce
+		summarizeBy: sum
+		sourceColumn: OverallEngagementScore
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ManagerSatisfaction
+		dataType: double
+		lineageTag: 72c48a7f-70fd-46ca-ae8d-8793d1571c44
+		summarizeBy: sum
+		sourceColumn: ManagerSatisfaction
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column WorkLifeBalance
+		dataType: double
+		lineageTag: 51a22e77-61a3-4b7b-92f3-4e0784dc2a59
+		summarizeBy: sum
+		sourceColumn: WorkLifeBalance
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CareerGrowth
+		dataType: double
+		lineageTag: 73f2ebd5-4068-43b3-80a5-2bffafa53b05
+		summarizeBy: sum
+		sourceColumn: CareerGrowth
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CompensationSatisfaction
+		dataType: double
+		lineageTag: 1a0b4a41-436a-469c-84f8-e0112d034ce4
+		summarizeBy: sum
+		sourceColumn: CompensationSatisfaction
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Recognition
+		dataType: double
+		lineageTag: d234fc31-8f49-4bc1-be69-ee8d6996f7da
+		summarizeBy: sum
+		sourceColumn: Recognition
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column WorkEnvironment
+		dataType: double
+		lineageTag: 093f52dd-63b5-4bea-b7d2-0cb93dce3f9e
+		summarizeBy: sum
+		sourceColumn: WorkEnvironment
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IntentToStayScore
+		dataType: double
+		lineageTag: 3fdf9469-8729-43aa-9c6b-15ef8f16b250
+		summarizeBy: sum
+		sourceColumn: IntentToStayScore
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IntentToStay
+		dataType: string
+		lineageTag: aaa71ba7-7490-45d5-bf9f-da8b46caff28
+		summarizeBy: none
+		sourceColumn: IntentToStay
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EngagementCategory
+		dataType: string
+		lineageTag: b86caaf9-ea73-45c8-b3e9-8a83a690e060
+		summarizeBy: none
+		sourceColumn: EngagementCategory
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_engagement = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Data Science Study materials and projects\Powerbi\Enterprise Workforce Intelligence & Attrition Analytics\Enterprise-Workforce-Intelligence\data\raw\fact_engagement.csv"),[Delimiter=",", Columns=14, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"EngagementID", type text}, {"EmployeeID", type text}, {"SurveyDate", type date}, {"SurveyPeriod", type text}, {"OverallEngagementScore", type number}, {"ManagerSatisfaction", type number}, {"WorkLifeBalance", type number}, {"CareerGrowth", type number}, {"CompensationSatisfaction", type number}, {"Recognition", type number}, {"WorkEnvironment", type number}, {"IntentToStayScore", type number}, {"IntentToStay", type text}, {"EngagementCategory", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

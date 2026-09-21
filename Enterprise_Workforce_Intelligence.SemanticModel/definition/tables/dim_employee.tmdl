@@ -1,0 +1,192 @@
+table dim_employee
+	lineageTag: 4fa96189-e039-477e-b0e7-32de349e5797
+
+	column EmployeeID
+		dataType: string
+		lineageTag: 559ad71a-148f-4b83-b5c2-dda887b761f3
+		summarizeBy: none
+		sourceColumn: EmployeeID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column FirstName
+		dataType: string
+		lineageTag: f749c007-8bf5-4231-b1f1-9bb202bdaa32
+		summarizeBy: none
+		sourceColumn: FirstName
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastName
+		dataType: string
+		lineageTag: 75694086-47b4-4467-aae9-f949ec089ddf
+		summarizeBy: none
+		sourceColumn: LastName
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 691f5654-6af7-4279-889e-434328d80d2a
+		summarizeBy: none
+		sourceColumn: Gender
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateOfBirth
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 26206d86-2a1d-4f0a-8e29-068eea7ee410
+		summarizeBy: none
+		sourceColumn: DateOfBirth
+
+		variation Variation
+			isDefault
+			relationship: b25c9398-7547-412b-a996-4831b3a9f56f
+			defaultHierarchy: LocalDateTable_70cd5d16-6d00-44c0-bc63-8eb37a6f44b5.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column EducationLevel
+		dataType: string
+		lineageTag: b630e2fd-d9a7-44f7-b492-2ba60f340d4d
+		summarizeBy: none
+		sourceColumn: EducationLevel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MaritalStatus
+		dataType: string
+		lineageTag: ddeb562e-b05b-45e5-9182-32478e4ad3b0
+		summarizeBy: none
+		sourceColumn: MaritalStatus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column HireDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 9bb2fd3e-2d9c-44e8-a783-3b674ac99866
+		summarizeBy: none
+		sourceColumn: HireDate
+
+		variation Variation
+			isDefault
+			relationship: bf555c41-dadb-49fa-81d8-00c3f12c9ca0
+			defaultHierarchy: LocalDateTable_99d83da7-9d12-45ac-9277-0e364d6f725f.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column EmploymentType
+		dataType: string
+		lineageTag: 90a819a2-03ef-4f8f-8fd3-586ce00142f3
+		summarizeBy: none
+		sourceColumn: EmploymentType
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DepartmentID
+		dataType: string
+		lineageTag: 7a5e96a4-333e-4312-a994-8364c8e5bd0d
+		summarizeBy: none
+		sourceColumn: DepartmentID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column JobRoleID
+		dataType: string
+		lineageTag: e4c0b80d-b585-419d-bcfe-dc391bc4792c
+		summarizeBy: none
+		sourceColumn: JobRoleID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeLevel
+		dataType: string
+		lineageTag: 179dec1d-fb7e-4fe0-8075-2989da7db25a
+		summarizeBy: none
+		sourceColumn: EmployeeLevel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocationID
+		dataType: string
+		lineageTag: 3848f21a-3c16-425e-85a2-d03449346d65
+		summarizeBy: none
+		sourceColumn: LocationID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ManagerEmployeeID
+		dataType: string
+		lineageTag: 585a1cc2-b5d1-4178-87d3-fbcff0732a25
+		summarizeBy: none
+		sourceColumn: ManagerEmployeeID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsManager
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: b682f162-e537-4a71-8a4d-f5a2c5a45f32
+		summarizeBy: none
+		sourceColumn: IsManager
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeStatus
+		dataType: string
+		lineageTag: 7a0d0d1e-941c-4c6e-95ef-ac805d0562ce
+		summarizeBy: none
+		sourceColumn: EmployeeStatus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_employee = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Data Science Study materials and projects\Powerbi\Enterprise Workforce Intelligence & Attrition Analytics\Enterprise-Workforce-Intelligence\data\raw\dim_employee.csv"),[Delimiter=",", Columns=16, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"EmployeeID", type text}, {"FirstName", type text}, {"LastName", type text}, {"Gender", type text}, {"DateOfBirth", type date}, {"EducationLevel", type text}, {"MaritalStatus", type text}, {"HireDate", type date}, {"EmploymentType", type text}, {"DepartmentID", type text}, {"JobRoleID", type text}, {"EmployeeLevel", type text}, {"LocationID", type text}, {"ManagerEmployeeID", type text}, {"IsManager", type logical}, {"EmployeeStatus", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

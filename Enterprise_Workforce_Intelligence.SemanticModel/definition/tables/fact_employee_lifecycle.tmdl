@@ -1,0 +1,158 @@
+table fact_employee_lifecycle
+	lineageTag: e4af4b0a-cbb2-4799-acdc-38ad90bee606
+
+	column EventID
+		dataType: string
+		lineageTag: 5234a04e-02f6-4cfa-be4e-bdbdc1fb5d55
+		summarizeBy: none
+		sourceColumn: EventID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeID
+		dataType: string
+		lineageTag: 2981d81e-038a-4303-bb49-877ef06b463d
+		summarizeBy: none
+		sourceColumn: EmployeeID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EventDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8aecd298-20cb-49a3-98fd-01ecabaeee78
+		summarizeBy: none
+		sourceColumn: EventDate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column EventType
+		dataType: string
+		lineageTag: b1f8a601-61d9-4ecc-8a60-feb488ec3f74
+		summarizeBy: none
+		sourceColumn: EventType
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PreviousDepartmentID
+		dataType: string
+		lineageTag: 78a1ea34-b072-43cb-a301-72ec1d505415
+		summarizeBy: none
+		sourceColumn: PreviousDepartmentID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column NewDepartmentID
+		dataType: string
+		lineageTag: 2d9f88ce-daa7-4845-aa03-f38603bf04c6
+		summarizeBy: none
+		sourceColumn: NewDepartmentID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PreviousLocationID
+		dataType: string
+		lineageTag: 4bd669f9-9ba8-4210-be6d-84a9a7b37af8
+		summarizeBy: none
+		sourceColumn: PreviousLocationID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column NewLocationID
+		dataType: string
+		lineageTag: ce0a3519-7853-4377-9e6e-03d79f5e465d
+		summarizeBy: none
+		sourceColumn: NewLocationID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PreviousJobRoleID
+		dataType: string
+		lineageTag: f6067217-389b-4fc3-9a83-875e3f7017fc
+		summarizeBy: none
+		sourceColumn: PreviousJobRoleID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column NewJobRoleID
+		dataType: string
+		lineageTag: c8805e00-03c2-4654-a0af-886f1c0d314e
+		summarizeBy: none
+		sourceColumn: NewJobRoleID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PreviousLevel
+		dataType: string
+		lineageTag: e2b761b6-da76-4785-b70a-133ad8650bb0
+		summarizeBy: none
+		sourceColumn: PreviousLevel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column NewLevel
+		dataType: string
+		lineageTag: 27b8a3ba-abae-4bc6-b758-780cbec6d51a
+		summarizeBy: none
+		sourceColumn: NewLevel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExitType
+		dataType: string
+		lineageTag: 0ebbf6ec-5105-4937-8b4f-f14b8310d98f
+		summarizeBy: none
+		sourceColumn: ExitType
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExitReason
+		dataType: string
+		lineageTag: 56778cf3-a99f-464f-a6ad-8facbb4b36c5
+		summarizeBy: none
+		sourceColumn: ExitReason
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_employee_lifecycle = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Data Science Study materials and projects\Powerbi\Enterprise Workforce Intelligence & Attrition Analytics\Enterprise-Workforce-Intelligence\data\raw\fact_employee_lifecycle.csv"),[Delimiter=",", Columns=14, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"EventID", type text}, {"EmployeeID", type text}, {"EventDate", type date}, {"EventType", type text}, {"PreviousDepartmentID", type text}, {"NewDepartmentID", type text}, {"PreviousLocationID", type text}, {"NewLocationID", type text}, {"PreviousJobRoleID", type text}, {"NewJobRoleID", type text}, {"PreviousLevel", type text}, {"NewLevel", type text}, {"ExitType", type text}, {"ExitReason", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

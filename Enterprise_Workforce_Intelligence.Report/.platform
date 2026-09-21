@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Enterprise_Workforce_Intelligence"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "7b93de83-6c59-4b14-bab7-e3f3aab0e2c9"
+  }
+}
