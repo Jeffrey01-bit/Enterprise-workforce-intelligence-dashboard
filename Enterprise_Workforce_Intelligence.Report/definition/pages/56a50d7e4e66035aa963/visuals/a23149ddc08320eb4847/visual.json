@@ -6,7 +6,8 @@
     "y": 20.285714285714334,
     "z": 25001,
     "height": 82.5,
-    "width": 81.875
+    "width": 81.875,
+    "tabOrder": 1000
   },
   "visualGroup": {
     "displayName": "Group 10",

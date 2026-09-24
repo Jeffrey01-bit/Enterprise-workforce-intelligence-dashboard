@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
-  "name": "60f9934e585bb5b14007",
+  "name": "6d7b7d38b1031b1e697b",
   "position": {
-    "x": 10.759891115342157,
-    "y": 13.780251974829071,
-    "z": 25000,
-    "height": 50.899215011364532,
-    "width": 64.901720168971281,
-    "tabOrder": 1000
+    "x": 0,
+    "y": 0,
+    "z": 18002,
+    "height": 181.42857142857144,
+    "width": 185.71428571428572,
+    "tabOrder": 16002
   },
   "visual": {
     "visualType": "image",
@@ -20,7 +20,7 @@
                 "name": {
                   "expr": {
                     "Literal": {
-                      "Value": "'download (7).svg'"
+                      "Value": "'Logo.png'"
                     }
                   }
                 },
@@ -29,7 +29,7 @@
                     "ResourcePackageItem": {
                       "PackageName": "RegisteredResources",
                       "PackageType": 1,
-                      "ItemName": "download_(7)3752183349645529.svg"
+                      "ItemName": "Logo7471703395688191.png"
                     }
                   }
                 },
@@ -42,10 +42,10 @@
                 }
               }
             },
-            "transparency": {
+            "cornerRadius": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "0L"
                 }
               }
             }
@@ -54,6 +54,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "parentGroupName": "0f8078e06c22a00d8833"
+  }
 }

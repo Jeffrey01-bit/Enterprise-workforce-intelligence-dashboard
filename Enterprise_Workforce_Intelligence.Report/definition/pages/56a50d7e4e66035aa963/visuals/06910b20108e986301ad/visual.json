@@ -4,9 +4,10 @@
   "position": {
     "x": 206.46694214876032,
     "y": 883.64669421487588,
-    "z": 27001,
+    "z": 17000,
     "height": 150.25,
-    "width": 1682.5
+    "width": 1682.5,
+    "tabOrder": 14000
   },
   "visualGroup": {
     "displayName": "Group 12",
